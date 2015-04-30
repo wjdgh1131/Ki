@@ -11,7 +11,7 @@
         android:layout_height="wrap_content" />
     <TextView android:text="ddd44dddd4d" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView android:text="ddd44dddd4d" android:layout_width="wrap_content"
+    <TextView android:text="ddd44dddssd4d" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
