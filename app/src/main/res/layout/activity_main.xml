@@ -3,7 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="#323232"
     android:orientation="vertical"
-
     >
     <ImageView
         android:layout_width="match_parent"
@@ -11,7 +10,6 @@
         android:layout_gravity="center"
         android:src="@drawable/logo"
         android:layout_marginTop="80dp"
-
         />
     <EditText
         android:layout_width="match_parent"
@@ -36,7 +34,6 @@
         android:radius="10dp"
         android:id="@+id/loginPwd"
         />
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,13 +49,28 @@
         android:id="@+id/loginBtn"
         />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="WISH에 가입하기"
-        android:gravity="center"
-        android:layout_marginTop="200dp"
-        android:id="@+id/join"
-        android:textColor="#fff"
-        />
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="친구 리스트 보기(임시)"
+            android:gravity="center"
+            android:id="@+id/friendList"
+            android:textColor="#fff"
+            android:layout_above="@+id/join"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WISH에 가입하기"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/join"
+            android:textColor="#fff"
+            android:layout_marginBottom="30dp"
+            />
+        </RelativeLayout>
 </LinearLayout>
