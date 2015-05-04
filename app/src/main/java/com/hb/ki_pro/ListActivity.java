@@ -2,6 +2,8 @@ package com.hb.ki_pro;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +25,12 @@ public class ListActivity extends ActionBarActivity{
 
         MainAdapter mainAdapter = new MainAdapter(R.layout.main_item, this, mainList);
         mainListView.setAdapter(mainAdapter);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

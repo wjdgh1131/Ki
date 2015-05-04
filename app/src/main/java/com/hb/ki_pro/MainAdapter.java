@@ -1,6 +1,8 @@
 package com.hb.ki_pro;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +86,22 @@ public class MainAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, k_idx + "번 게시글 댓글 보기", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        convertView.findViewById(R.id.overflow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] msg = new String[]{"수정", "삭제"};
+                new AlertDialog.Builder(context)
+                .setItems(msg, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, msg[which], Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+
             }
         });
         return convertView;
