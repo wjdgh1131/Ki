@@ -1,19 +1,39 @@
 package com.hb.ki_pro;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(getBaseContext(),"",Toast.LENGTH_SHORT).show();
+         ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), ListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.friendList).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -38,4 +58,6 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
