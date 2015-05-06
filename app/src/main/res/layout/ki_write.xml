@@ -90,9 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             </LinearLayout>
-
-
-            <EditText
+        <EditText
                 android:hint="오늘은 무슨 좋은일이 있었나요?"
                 android:gravity="top"
                 android:layout_marginTop="10dp"
