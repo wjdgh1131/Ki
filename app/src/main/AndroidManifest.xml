@@ -6,11 +6,10 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="W I S H"
+        android:label="@string/wish"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,5 +20,6 @@
         <activity android:name=".CmtAddActivity"/>
         <activity android:name=".Ki_Write"/>
         <activity android:name=".SignUpActivity"/>
+        <activity android:name=".SearchActivity"/>
     </application>
 </manifest>

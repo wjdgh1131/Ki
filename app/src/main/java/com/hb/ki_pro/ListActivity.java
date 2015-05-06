@@ -3,10 +3,12 @@ package com.hb.ki_pro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,6 +16,7 @@ public class ListActivity extends ActionBarActivity{
 
     ArrayList<MainItem> mainList = new ArrayList<>();
     ListView mainListView;
+    String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +32,40 @@ public class ListActivity extends ActionBarActivity{
         mainListView.setAdapter(mainAdapter);
     }
 
+    protected void search(String s){
+        query = s;
+        Toast.makeText(getApplicationContext(),
+                "String entered is " + s, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        intent.putExtra("keyword", query);
+        startActivity(intent);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.action_search).getActionView();
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        // SearchView searchView = (SearchView) MenuItemCompat
+//        //    .getActionView(searchItem);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    // do something with s, the entered string
+                    search(s);
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return false;
+                }
+            });
+        }
+
         return super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         /*getMenuInflater().inflate(R.menu.main_activity_actions, menu);
@@ -57,4 +88,6 @@ public class ListActivity extends ActionBarActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
