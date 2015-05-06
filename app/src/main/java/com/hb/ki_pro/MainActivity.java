@@ -10,6 +10,8 @@ import android.view.View;
 
 public class MainActivity extends ActionBarActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
         findViewById(R.id.friendList).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Ki_Write.class);
                 startActivity(intent);
             }
         });
