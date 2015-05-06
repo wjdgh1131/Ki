@@ -39,6 +39,7 @@ public class Ki_Write extends ActionBarActivity {
                         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
                         Intent intent = new Intent(Intent.ACTION_PICK,uri);
                 startActivityForResult(intent, 0);
+
             }
         });
 
