@@ -19,5 +19,6 @@
         <activity android:name=".ListActivity"/>
         <activity android:name=".FriendListActivity"/>
         <activity android:name=".CmtAddActivity"/>
+        <activity android:name=".Ki_Write"/>
     </application>
 </manifest>

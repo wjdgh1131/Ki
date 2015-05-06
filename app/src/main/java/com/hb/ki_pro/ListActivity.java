@@ -1,9 +1,11 @@
 package com.hb.ki_pro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -27,10 +29,32 @@ public class ListActivity extends ActionBarActivity{
         mainListView.setAdapter(mainAdapter);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.action_search).getActionView();
         return super.onCreateOptionsMenu(menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        /*getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        return true;*/
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.action_settings:
+                return true;
+            case R.id.action_write:
+                Intent intent = new Intent(getApplicationContext(), Ki_Write.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
