@@ -84,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             </LinearLayout>
+
         <EditText
             android:layout_margin="10dp"
                 android:hint="오늘은 무슨 좋은일이 있었나요?"
