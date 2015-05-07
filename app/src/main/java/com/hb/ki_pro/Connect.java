@@ -17,6 +17,7 @@ public class Connect extends Activity implements Runnable{
         this.rb = rb;
         this.send = send;
         this.type = type;
+
     }
 
 
