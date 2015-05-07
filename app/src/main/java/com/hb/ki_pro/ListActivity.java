@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class ListActivity extends ActionBarActivity{
@@ -17,11 +20,31 @@ public class ListActivity extends ActionBarActivity{
     ArrayList<MainItem> mainList = new ArrayList<>();
     ListView mainListView;
     String query;
-
+    Connect connect;
+    RbPreference rb = new RbPreference(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_list);
+        connect = new Connect(rb,null,"all");
+        Thread t = new Thread(connect);
+        t.setDaemon(true);
+        t.start();
+        try {
+            JSONArray jsonArray = new JSONArray(connect.result);
+            String[] datas = new String[jsonArray.length()];
+            for (int i = 0; i < datas.length; i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                rb.put("u_idx",jsonObject.getString("u_idx"));
+                rb.put("u_id",jsonObject.getString("u_id"));
+                rb.put("u_name",jsonObject.getString("u_name"));
+            }
+        }catch (Exception e){
+
+        }
+
+
+
 
         mainListView = (ListView)findViewById(R.id.mainListView);
 
