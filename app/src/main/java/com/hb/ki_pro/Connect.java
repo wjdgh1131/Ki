@@ -41,7 +41,7 @@ public class Connect extends Activity implements Runnable{
                 try {
 
             HttpClient client = new DefaultHttpClient();
-            String url = "http://203.236.209.42:8090/sns_project/Mobile?type="+type+"&u_id="+send;
+            String url = "http://203.236.209.42:8090/sns_project/Mobile?type="+type+send;
             HttpGet httpGet = new HttpGet(url);
             ResponseHandler<String> rh = new BasicResponseHandler();
             responseData = client.execute(httpGet,rh);
