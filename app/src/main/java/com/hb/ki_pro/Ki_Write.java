@@ -8,21 +8,34 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 public class Ki_Write extends ActionBarActivity {
-
+    String responseData;
+    String send;
+    String u_idx;
 
     ImageView image_view;
     ImageView image_add;
-    TextView txt,ki_count,ki_cate;
+    TextView ki_subject,ki_count,ki_cate;
+    EditText ki_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +43,10 @@ public class Ki_Write extends ActionBarActivity {
         setContentView(R.layout.ki_write);
         image_add = (ImageView)findViewById(R.id.k_image_add);
         image_view = (ImageView)findViewById(R.id.k_image_view);
-        txt = (TextView)findViewById(R.id.subject);
+        ki_subject = (TextView)findViewById(R.id.subject);
         ki_cate = (TextView)findViewById(R.id.ki_cate);
         ki_count = (TextView)findViewById(R.id.ki_count);
+        ki_content = (EditText)findViewById(R.id.ki_content);
 
         image_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +67,7 @@ public class Ki_Write extends ActionBarActivity {
                 dlg.setItems(subject,new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        txt.setText(subject[which]);
+                        ki_subject.setText(subject[which]);
                     }
                 });
                 dlg.setPositiveButton("닫기",null);
@@ -106,6 +120,8 @@ public class Ki_Write extends ActionBarActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),image);
                 bitmap = Bitmap.createScaledBitmap(bitmap,450,340,false);
                 image_view.setImageBitmap(bitmap);
+
+
             }catch (Exception e){
 
             }
@@ -113,6 +129,40 @@ public class Ki_Write extends ActionBarActivity {
     }
 
     protected void write_ok(){
+        send = "u_idx="+u_idx+"&k_kind="+ki_cate.getText().toString()+"&k_content="+ki_content.getText().toString()
+                +"&k_max="+ki_count.getText().toString()+"&k_image=";
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=write&"+send;
+                    HttpGet httpGet = new HttpGet(url);
+                    ResponseHandler<String> rh = new BasicResponseHandler();
+                    responseData = client.execute(httpGet,rh);
+                    Log.i(">>>>>>>>>><<<<<<<<","ㅈㅈㅈㅈㅈㅈㅈ");
+                    Log.i("-------->>>>>>>>>",responseData);
+
+
+                    JSONArray jsonArray = new JSONArray(responseData);
+
+                    String[] datas = new String[jsonArray.length()];
+                    for (int i = 0; i < datas.length; i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    }
+                }catch (Exception e){
+                }
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+
+                startActivity(intent);
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+
+
         Toast.makeText(getApplicationContext(), "글 작성 완료", Toast.LENGTH_SHORT).show();
         finish();
     }
