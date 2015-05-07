@@ -4,9 +4,9 @@
     <item android:id="@+id/action_write"
         android:icon="@drawable/ic_action_edit"
         wish:showAsAction="ifRoom"
-        android:title="@string/write" />
+        android:title="write" />
     <item android:id="@+id/action_back"
         android:icon="@drawable/ic_action_back"
         wish:showAsAction="ifRoom"
-        android:title="@string/back" />
+        android:title="back" />
 </menu>

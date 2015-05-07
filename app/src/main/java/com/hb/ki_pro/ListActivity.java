@@ -110,16 +110,22 @@ public class ListActivity extends ActionBarActivity{
                 startActivity(intent);
                 return true;
 
+
             case R.id.my_ki : Toast.makeText(this, "내 글", Toast.LENGTH_SHORT).show();break;
             case R.id.friend_ki : Toast.makeText(this,"친구 글",Toast.LENGTH_SHORT).show();break;
             case R.id.info : Toast.makeText(this,"회원 정보",Toast.LENGTH_SHORT).show();break;
             case R.id.friend_list : Toast.makeText(this,"친구 목록",Toast.LENGTH_SHORT).show();break;
-            case R.id.wish : Toast.makeText(this,"소원 빌기",Toast.LENGTH_SHORT).show();break;
+            case R.id.wish : Toast.makeText(this,"소원 빌기",Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(getApplicationContext(),WishActivity.class);
+                startActivity(intent1);
+                break;
             case R.id.collection : Toast.makeText(this,"부적 보기",Toast.LENGTH_SHORT).show();break;
             case R.id.logout : Toast.makeText(this,"로그 아웃",Toast.LENGTH_SHORT).show();break;
 
+
             default:
                 return super.onOptionsItemSelected(item);
+
         }
         return false;
     }

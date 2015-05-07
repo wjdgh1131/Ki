@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                connect = new Connect(rb,"&u_id="+loginId.getText().toString().trim(),"login");
+                connect = new Connect(rb,loginId.getText().toString().trim(),"login");
                 Thread t = new Thread(connect);
                 t.setDaemon(true);
                 t.start();
@@ -56,8 +56,8 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-               /*Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                startActivity(intent);*/
+               Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                startActivity(intent);
             }
         });
 
