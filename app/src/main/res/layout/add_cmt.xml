@@ -6,29 +6,10 @@
 <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minLines="8"
     android:hint="댓글을 입력하세요"
     android:gravity="top"
     android:id="@+id/insert_cmt_form"
+    android:background="@null"
     />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="취소"
-    android:id="@+id/cmt_cancel"
-   />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="입력"
-            android:id="@+id/cmt_ok"
-            />
-        </LinearLayout>
 </LinearLayout>

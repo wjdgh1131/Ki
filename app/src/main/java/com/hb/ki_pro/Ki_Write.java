@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,27 +21,25 @@ public class Ki_Write extends ActionBarActivity {
 
 
     ImageView image_view;
-    Button image_add;
+    ImageView image_add;
     TextView txt,ki_count,ki_cate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ki_write);
-        image_add = (Button)findViewById(R.id.k_image_add);
+        image_add = (ImageView)findViewById(R.id.k_image_add);
         image_view = (ImageView)findViewById(R.id.k_image_view);
         txt = (TextView)findViewById(R.id.subject);
         ki_cate = (TextView)findViewById(R.id.ki_cate);
         ki_count = (TextView)findViewById(R.id.ki_count);
 
         image_add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                        Intent intent = new Intent(Intent.ACTION_PICK,uri);
+            @Override
+            public void onClick(View v) {
+                Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                Intent intent = new Intent(Intent.ACTION_PICK,uri);
                 startActivityForResult(intent, 0);
-
             }
         });
 
@@ -52,7 +49,7 @@ public class Ki_Write extends ActionBarActivity {
                 final String[] subject = new String[] {"전체공개","친구공개"};
                 AlertDialog.Builder dlg = new AlertDialog.Builder(Ki_Write.this);
                 dlg.setTitle("공개 여부");
-                dlg.setIcon(R.mipmap.ic_launcher);
+                dlg.setIcon(R.drawable.ic_action_group);
                 dlg.setItems(subject,new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -69,7 +66,7 @@ public class Ki_Write extends ActionBarActivity {
                 final String[] subject = new String[] {"10","15","20","25","30"};
                 AlertDialog.Builder dlg = new AlertDialog.Builder(Ki_Write.this);
                 dlg.setTitle("기 수량 입력");
-                dlg.setIcon(R.mipmap.ic_launcher);
+                dlg.setIcon(R.drawable.ic_action_new);
                 dlg.setItems(subject,new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -86,7 +83,7 @@ public class Ki_Write extends ActionBarActivity {
                 final String[] subject = new String[] {"금전","연애","취업","성공","건강","기타"};
                 AlertDialog.Builder dlg = new AlertDialog.Builder(Ki_Write.this);
                 dlg.setTitle("카테고리");
-                dlg.setIcon(R.mipmap.ic_launcher);
+                dlg.setIcon(R.drawable.ic_action_new);
                 dlg.setItems(subject,new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -99,24 +96,25 @@ public class Ki_Write extends ActionBarActivity {
         });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap bitmap = null;
-        Toast.makeText(this,"등록 완료1",Toast.LENGTH_SHORT).show();
 
         if(resultCode == RESULT_OK && requestCode == 0){
-            Toast.makeText(this,"등록 완료2",Toast.LENGTH_SHORT).show();
             Uri image = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),image);
                 bitmap = Bitmap.createScaledBitmap(bitmap,450,340,false);
                 image_view.setImageBitmap(bitmap);
-                Toast.makeText(this,"등록 완료3",Toast.LENGTH_SHORT).show();
             }catch (Exception e){
 
             }
         }
+    }
+
+    protected void write_ok(){
+        Toast.makeText(getApplicationContext(), "글 작성 완료", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
@@ -128,24 +126,19 @@ public class Ki_Write extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.action_search).getActionView();
+        inflater.inflate(R.menu.menu_sub, menu);
         return super.onCreateOptionsMenu(menu);
-        // Inflate the menu; this adds items to the action bar if it is present.
-        /*getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        return true;*/
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.action_search:
-                return true;
-            case R.id.action_settings:
-                return true;
             case R.id.action_write:
-                Toast.makeText(getApplicationContext(), "이미 글을 작성중입니다", Toast.LENGTH_SHORT).show();
+                write_ok();
+                return true;
+            case R.id.action_back:
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
