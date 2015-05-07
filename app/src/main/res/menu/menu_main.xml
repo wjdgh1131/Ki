@@ -22,4 +22,27 @@
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         wish:showAsAction="never" />
+
+    <item
+        android:id="@+id/my_ki"
+        android:title="내 글"/>
+    <item
+        android:id="@+id/friend_ki"
+        android:title="친구 글"/>
+    <item
+        android:id="@+id/info"
+        android:title="내 정보"/>
+    <item
+        android:id="@+id/friend_list"
+        android:title="친구 목록"/>
+    <item
+        android:id="@+id/wish"
+        android:title="소원 빌기"/>
+    <item
+        android:id="@+id/collection"
+        android:title="부적 보기"/>
+    <item
+        android:id="@+id/logout"
+        android:title="로그아웃"/>
+
 </menu>
