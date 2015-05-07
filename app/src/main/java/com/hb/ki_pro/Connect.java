@@ -25,6 +25,7 @@ public class Connect extends Activity implements Runnable{
     String type="";
     String send="";
 
+
     String result="";
 
     public void setResult(String result) {

@@ -30,6 +30,7 @@ public class ListActivity extends ActionBarActivity{
         Thread t = new Thread(connect);
         t.setDaemon(true);
         t.start();
+
         try {
             JSONArray jsonArray = new JSONArray(connect.result);
             String[] datas = new String[jsonArray.length()];

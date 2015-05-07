@@ -13,7 +13,6 @@ public class RbPreference {
         public final static String PREF_MAIN_VALUE = "PREF_MAIN_VALUE";
         static Context mContext;
 
-
         public RbPreference(Context c) {
             mContext = c;
         }
