@@ -4,18 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,11 +18,7 @@ public class MainActivity extends ActionBarActivity {
     EditText loginId, loginPwd;
     TextView tv;
     Connect connect;
-    String id = "";
-    String idx = "";
-    String type="";
-    String send="";
-    String responseData;
+
     RbPreference rb = new RbPreference(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
         tv = (TextView) findViewById(R.id.textView);
 
 
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -47,51 +36,28 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-
-                type = "login";
-                send = loginId.getText().toString().trim();
-
-
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Log.i(">>>>>>>>>><<<<<<<<","ㅇㅇㅇㅇㅇㅇ");
-                            HttpClient client = new DefaultHttpClient();
-                            String url = "http://203.236.209.42:8090/sns_project/Mobile?type="+type+"&u_id="+send;
-                            HttpGet httpGet = new HttpGet(url);
-                            ResponseHandler<String> rh = new BasicResponseHandler();
-                            responseData = client.execute(httpGet,rh);
-                            Log.i(">>>>>>>>>><<<<<<<<","ㅈㅈㅈㅈㅈㅈㅈ");
-                            Log.i("-------->>>>>>>>>",responseData);
-
-
-                            JSONArray jsonArray = new JSONArray(responseData);
-
-                            String[] datas = new String[jsonArray.length()];
-                            for (int i = 0; i < datas.length; i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                id = jsonObject.getString("u_id");
-                                idx = jsonObject.getString("u_idx");
-                            }
-                        }catch (Exception e){
-                        }
-                        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                        intent.putExtra("u_id",id);
-                        intent.putExtra("u_idx",idx);
-
-                        Log.i("-->>>>>>>>>>>>>>ID",id);
-                        Log.i("-->>>>>>>>>>>>>>ID",idx);
-
-                        startActivity(intent);
-                    }
-                });
+                connect = new Connect(rb,loginId.getText().toString().trim(),"login");
+                Thread t = new Thread(connect);
                 t.setDaemon(true);
                 t.start();
 
+                try {
+                    JSONArray jsonArray = new JSONArray(connect.result);
+                    String[] datas = new String[jsonArray.length()];
+                    for (int i = 0; i < datas.length; i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        rb.put("u_idx",jsonObject.getString("u_idx"));
+                        rb.put("u_id",jsonObject.getString("u_id"));
+                        rb.put("u_name",jsonObject.getString("u_name"));
+                    }
+                }catch (Exception e){
+
+                }
 
 
 
+               /*Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                startActivity(intent);*/
             }
         });
 

@@ -6,10 +6,11 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/wish"
+        android:label="W I S H"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -18,8 +19,8 @@
         <activity android:name=".ListActivity"/>
         <activity android:name=".FriendListActivity"/>
         <activity android:name=".CmtAddActivity"/>
-        <activity android:name=".Ki_Write"/>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".SearchActivity"/>
+        <activity android:name=".WishActivity"/>
+        <activity android:name=".WishWrite"/>
+        <activity android:name=".SelectCard"/>
     </application>
 </manifest>
