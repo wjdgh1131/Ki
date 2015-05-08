@@ -28,6 +28,8 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".Ki_Write" />
         <activity  android:name=".Ki_Update" />
+        <activity android:name=".CmtListActivity"/>
+
     </application>
 
 </manifest>
