@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class FriendAdapter extends BaseAdapter{
@@ -49,13 +51,17 @@ public class FriendAdapter extends BaseAdapter{
         ImageView friend_image = (ImageView)convertView.findViewById(R.id.friend_image);
         TextView friend_name = (TextView)convertView.findViewById(R.id.friend_name);
 
-        friend_image.setImageResource(item.getU_image());
+
         friend_name.setText(item.getU_name());
+        Picasso.with(context)
+                .load(item.getU_image())
+                .resize(60,60)
+                .into(friend_image);
 
         convertView.findViewById(R.id.friend_del).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, item.getU_idx()+"번 친구를 삭제합니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, item.getF_idx()+"번 친구를 삭제합니다", Toast.LENGTH_SHORT).show();
             }
         });
 
