@@ -46,12 +46,8 @@ public class FriendAdapter extends BaseAdapter{
         if (convertView == null) convertView = inflater.inflate(layout, parent, false);
 
         final FriendItem item = friendList.get(position);
-        ImageView isConnectedLamp = (ImageView)convertView.findViewById(R.id.isConnectedLamp);
         ImageView friend_image = (ImageView)convertView.findViewById(R.id.friend_image);
         TextView friend_name = (TextView)convertView.findViewById(R.id.friend_name);
-
-        if (item.isConnected()) isConnectedLamp.setImageResource(R.drawable.connecte_lamp_on);
-        else isConnectedLamp.setImageResource(R.drawable.connected_lamp_off);
 
         friend_image.setImageResource(item.getU_image());
         friend_name.setText(item.getU_name());

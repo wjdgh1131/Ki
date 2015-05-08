@@ -31,11 +31,13 @@ public class MainAdapter extends BaseAdapter{
     HttpURLConnection connection;
     InputStream is ;
     Bitmap getBitmap;
+    String my_idx;
 
-    public MainAdapter(int layout, Context context, ArrayList<MainItem> mainList) {
+    public MainAdapter(int layout, Context context, ArrayList<MainItem> mainList, String my_idx) {
         this.layout = layout;
         this.context = context;
         this.mainList = mainList;
+        this.my_idx = my_idx;
 
         inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
     }
@@ -92,8 +94,9 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_cmt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, k_idx+"번 게시글에 댓글 달기", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, CmtAddActivity.class);
+                intent.putExtra("k_idx", k_idx);
+                intent.putExtra("u_idx", my_idx);
                 context.startActivity(intent);
             }
         });

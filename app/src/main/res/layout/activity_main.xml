@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="아이디"
+        android:text="suzi"
         android:background="@drawable/myedittxt"
         android:padding="10dp"
         android:layout_marginLeft="50dp"
@@ -33,6 +34,7 @@
         android:layout_marginRight="50dp"
         android:radius="10dp"
         android:id="@+id/loginPwd"
+        android:text="1111"
         />
     <Button
         android:layout_width="match_parent"
@@ -55,16 +57,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="친구 리스트 보기(임시)"
-            android:gravity="center"
-            android:id="@+id/friendList"
-            android:textColor="#fff"
-            android:layout_above="@+id/join"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="WISH에 가입하기"
             android:gravity="center"
             android:layout_alignParentBottom="true"
@@ -72,15 +64,5 @@
             android:textColor="#fff"
             android:layout_marginBottom="30dp"
             />
-
-        <TextView
-            android:textColor="#00ff00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="56dp" />
     </RelativeLayout>
 </LinearLayout>

@@ -239,8 +239,9 @@ public class SignUpActivity extends ActionBarActivity{
                 final String pwd = pwd_edit.getText().toString().trim();
                 final String name = name_edit.getText().toString().trim();
                 final String date = date_edit.getYear()+"-"+(date_edit.getMonth()+1)+"-"+date_edit.getDayOfMonth();
-                final String gender = "male";
-                //if (gender_edit.getCheckedRadioButtonId() == R.id.gender_edit_female) gender = "female";
+                String temp_gender = "male";
+                if (gender_edit.getCheckedRadioButtonId() == R.id.gender_edit_female) temp_gender = "female";
+                final String gender = temp_gender;
                 final String phone = mobile_edit.getText().toString().trim();
                 final String email = email_edit.getText().toString().trim();
                 Toast.makeText(getApplication(),"생일  :  "+date,Toast.LENGTH_SHORT).show();
