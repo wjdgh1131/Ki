@@ -116,7 +116,17 @@ public class MainAdapter extends BaseAdapter{
                         .setItems(msg, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(context, msg[which], Toast.LENGTH_SHORT).show();
+                                if( msg[which].equals("수정")){
+                                    Intent intent = new Intent(context,Ki_Update.class);
+                                    intent.putExtra("u_idx",my_idx);
+                                    intent.putExtra("k_idx",k_idx);
+                                    intent.putExtra("k_kind",item.getK_kind());
+                                    intent.putExtra("k_content",item.getK_content());
+                                    intent.putExtra("k_image",item.getK_image());
+                                    context.startActivity(intent);
+                                }else if( msg[which].equals("삭제")){
+
+                                }
                             }
                         })
                         .show();

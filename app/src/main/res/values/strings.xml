@@ -11,5 +11,6 @@
     <string name="title_activity_wish">WishActivity</string>
     <string name="title_activity_wish_write">WishWrite</string>
     <string name="title_activity_select_card">SelectCard</string>
+    <string name="title_activity_ki_update">Ki_Update</string>
 
 </resources>
