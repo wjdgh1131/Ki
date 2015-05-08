@@ -29,6 +29,7 @@ public class ListActivity extends ActionBarActivity{
     ListView mainListView;
     String query;
     Connect connect;
+    String u_id,u_idx,u_name;
     RbPreference rb = new RbPreference(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,11 @@ public class ListActivity extends ActionBarActivity{
         setContentView(R.layout.main_list);
 
         Intent intent = getIntent();
-        final String u_idx = intent.getStringExtra("u_idx");
-
-//        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+        String msg = intent.getStringExtra("u_idx");
+        u_id = intent.getStringExtra("u_id");
+        u_idx = intent.getStringExtra("u_idx");
+        u_name = intent.getStringExtra("u_name");
+        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
 
 
 
@@ -62,7 +65,9 @@ public class ListActivity extends ActionBarActivity{
                     String[] datas = new String[jsonArray.length()];
                     for (int i = 0; i < datas.length; i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        mainList.add(new MainItem(jsonObject.getString("k_idx"), jsonObject.getString("u_idx"), jsonObject.getString("u_image"), jsonObject.getString("u_name"), jsonObject.getString("k_regdate").substring(0, 10), jsonObject.getString("k_content").replace("<br>", "\n"), jsonObject.getInt("k_cmt_count"), jsonObject.getString("k_image"), jsonObject.getString("k_kind"),jsonObject.getInt("k_max"), jsonObject.getInt("k_hit")));                    }
+//                        Toast.makeText(getApplicationContext(), jsonObject.getString("u_name"), Toast.LENGTH_SHORT).show();
+//                        String k_content = jsonObject.getString("k_content").replace("<br>", "\n");
+                        mainList.add(new MainItem(jsonObject.getString("k_idx"), jsonObject.getString("u_idx"), jsonObject.getString("u_image"), jsonObject.getString("u_name"), jsonObject.getString("k_regdate").substring(0, 10), jsonObject.getString("k_content").replace("<br>", "\n"), 30, jsonObject.getString("k_image"), jsonObject.getString("k_kind"),jsonObject.getInt("k_max"), jsonObject.getInt("k_hit")));                    }
                     Log.i("들어옵니까??\n\n\n","ㅇㅇ");
                     Looper.loop();
                 }catch (Exception e){
@@ -76,7 +81,10 @@ public class ListActivity extends ActionBarActivity{
 
         mainListView = (ListView)findViewById(R.id.mainListView);
 
-        MainAdapter mainAdapter = new MainAdapter(R.layout.main_item, this, mainList, u_idx);
+//        mainList.add(new MainItem("7", "7", R.drawable.yuno, "YUNO", "2015/05/01", "안녕하세요", 30, R.drawable.test_image, "연애",10, 4));
+//        mainList.add(new MainItem("8", "8", R.mipmap.ic_launcher, "안드로보이", "2015/05/02", "HELLO", 30, R.drawable.test4, "연애",20, 6));
+
+        MainAdapter mainAdapter = new MainAdapter(R.layout.main_item,this, mainList ,u_idx);
         mainListView.setAdapter(mainAdapter);
     }
 
@@ -130,6 +138,9 @@ public class ListActivity extends ActionBarActivity{
                 return true;
             case R.id.action_write:
                 Intent intent = new Intent(getApplicationContext(), Ki_Write.class);
+                intent.putExtra("u_id",u_id);
+                intent.putExtra("u_idx",u_idx);
+                intent.putExtra("u_name",u_name);
                 startActivity(intent);
                 return true;
 

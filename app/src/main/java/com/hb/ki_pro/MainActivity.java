@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
 
     String id = "";
     String idx = "";
+    String name= "";
     String type="";
     String send="";
     String responseData;
@@ -73,12 +74,14 @@ public class MainActivity extends ActionBarActivity {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 id = jsonObject.getString("u_id");
                                 idx = jsonObject.getString("u_idx");
+                                name = jsonObject.getString("u_name");
                             }
                         }catch (Exception e){
                         }
                         Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                         intent.putExtra("u_id",id);
                         intent.putExtra("u_idx",idx);
+                        intent.putExtra("u_name",name);
 
                         Log.i("-->>>>>>>>>>>>>>ID",id);
                         Log.i("-->>>>>>>>>>>>>>ID",idx);
