@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainAdapter extends BaseAdapter{
@@ -20,6 +26,11 @@ public class MainAdapter extends BaseAdapter{
     Context context;
     ArrayList<MainItem> mainList;
     private LayoutInflater inflater;
+    Bitmap u_image_bm;
+    URL imgUrl;
+    HttpURLConnection connection;
+    InputStream is ;
+    Bitmap getBitmap;
 
     public MainAdapter(int layout, Context context, ArrayList<MainItem> mainList) {
         this.layout = layout;
@@ -48,7 +59,7 @@ public class MainAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) convertView = inflater.inflate(layout, parent, false);
 
-        ImageView u_image = (ImageView)convertView.findViewById(R.id.u_image);
+        final ImageView u_image = (ImageView)convertView.findViewById(R.id.u_image);
         TextView u_name = (TextView)convertView.findViewById(R.id.u_name);
         TextView k_regdate = (TextView)convertView.findViewById(R.id.k_regdate);
         TextView k_content = (TextView)convertView.findViewById(R.id.k_content);
@@ -58,11 +69,21 @@ public class MainAdapter extends BaseAdapter{
 
         final MainItem item = mainList.get(position);
 
-        u_image.setImageResource(item.getU_image());
+        Picasso.with(context)
+                .load(item.getU_image())
+                .resize(60,60)
+                .into(u_image);
+
         u_name.setText(item.getU_name());
         k_regdate.setText(item.getK_regdate());
         k_content.setText(item.getK_content());
-        k_image.setImageResource(item.getK_image());
+        if(item.getK_image() != null) {
+            Picasso.with(context)
+                    .load("http://203.236.209.42:8090/sns_project/"+item.getK_image())
+                    .resize(300,200)
+                    .into(k_image);
+
+        }
         k_cmt_count.setText(item.getK_cmt_count());
         k_remain.setText(item.getK_remain());
 
@@ -94,16 +115,17 @@ public class MainAdapter extends BaseAdapter{
             public void onClick(View v) {
                 final String[] msg = new String[]{"수정", "삭제"};
                 new AlertDialog.Builder(context)
-                .setItems(msg, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context, msg[which], Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .show();
+                        .setItems(msg, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(context, msg[which], Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
 
             }
         });
         return convertView;
     }
+
 }

@@ -62,8 +62,8 @@ public class ListActivity extends ActionBarActivity{
                     for (int i = 0; i < datas.length; i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 //                        Toast.makeText(getApplicationContext(), jsonObject.getString("u_name"), Toast.LENGTH_SHORT).show();
-                        mainList.add(new MainItem("7", "7", R.drawable.yuno, jsonObject.getString("u_name"), "2015/05/01", "안녕하세요", 30, R.drawable.test_image, "연애",10, 4));
-                    }
+//                        String k_content = jsonObject.getString("k_content").replace("<br>", "\n");
+                        mainList.add(new MainItem(jsonObject.getString("k_idx"), jsonObject.getString("u_idx"), jsonObject.getString("u_image"), jsonObject.getString("u_name"), jsonObject.getString("k_regdate").substring(0, 10), jsonObject.getString("k_content").replace("<br>", "\n"), 30, jsonObject.getString("k_image"), jsonObject.getString("k_kind"),jsonObject.getInt("k_max"), jsonObject.getInt("k_hit")));                    }
                     Log.i("들어옵니까??\n\n\n","ㅇㅇ");
                     Looper.loop();
                 }catch (Exception e){

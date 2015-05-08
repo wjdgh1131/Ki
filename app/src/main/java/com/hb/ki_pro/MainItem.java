@@ -4,15 +4,15 @@ package com.hb.ki_pro;
 public class MainItem {
 
 
-    private String k_idx, u_idx, k_kind, k_content, k_regdate, u_name;
-    private int k_cmt_count, k_remain, k_image, u_image, k_max, k_hit;
+    private String k_idx, u_idx, k_kind, k_content, k_regdate, u_name, u_image, k_image;
+    private int k_cmt_count, k_remain, k_max, k_hit;
 
 //    public MainItem() {
 //    }
 
 
 
-    public MainItem(String k_idx, String u_idx, int u_image, String u_name, String k_regdate, String k_content, int k_cmt_count, int k_image, String k_kind, int k_max, int k_hit) {
+    public MainItem(String k_idx, String u_idx, String u_image, String u_name, String k_regdate, String k_content, int k_cmt_count, String k_image, String k_kind, int k_max, int k_hit) {
         this.k_idx = k_idx;
         this.u_idx = u_idx;
         this.k_kind = k_kind;
@@ -62,12 +62,12 @@ public class MainItem {
         return "잔여 기 "+(k_max - k_hit)+"개";
     }
 
-    public int getK_image() {
+    public String getK_image() {
         return k_image;
     }
 
-    public int getU_image() {
-        return u_image;
+    public String getU_image() {
+        return "http://203.236.209.42:8090/sns_project/"+u_image;
     }
 
     public int getK_max() {
