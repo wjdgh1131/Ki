@@ -1,6 +1,7 @@
 package com.hb.ki_pro;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -13,6 +14,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class SignUpActivity extends ActionBarActivity{
 
     LinearLayout id_layout, pwd_layout, name_layout, date_layout, gender_layout, mobile_layout, email_layout;
@@ -20,7 +29,8 @@ public class SignUpActivity extends ActionBarActivity{
     DatePicker date_edit;
     RadioGroup gender_edit;
     RadioButton gender_edit_male, gender_edit_female;
-
+    String responseData;
+    String res;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -225,17 +235,53 @@ public class SignUpActivity extends ActionBarActivity{
         findViewById(R.id.email_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = id_edit.getText().toString().trim();
-                String pwd = pwd_edit.getText().toString().trim();
-                String name = name_edit.getText().toString().trim();
-                String date = date_edit.getYear()+"-"+(date_edit.getMonth()+1)+"-"+date_edit.getDayOfMonth();
-                String gender = "male";
-                if (gender_edit.getCheckedRadioButtonId() == R.id.gender_edit_female) gender = "female";
-                String phone = mobile_edit.getText().toString().trim();
-                String email = email_edit.getText().toString().trim();
+                final String id = id_edit.getText().toString().trim();
+                final String pwd = pwd_edit.getText().toString().trim();
+                final String name = name_edit.getText().toString().trim();
+                final String date = date_edit.getYear()+"-"+(date_edit.getMonth()+1)+"-"+date_edit.getDayOfMonth();
+                final String gender = "male";
+                //if (gender_edit.getCheckedRadioButtonId() == R.id.gender_edit_female) gender = "female";
+                final String phone = mobile_edit.getText().toString().trim();
+                final String email = email_edit.getText().toString().trim();
+                Toast.makeText(getApplication(),"생일  :  "+date,Toast.LENGTH_SHORT).show();
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Looper.prepare();
+                            HttpClient client = new DefaultHttpClient();
+                            String url = "http://203.236.209.42:8090/sns_project/Mobile?type=join&u_id="+id
+                                    +"&u_pw="+pwd
+                                    +"&u_name="+name
+                                    +"&u_b="+date
+                                    +"&u_gender="+gender
+                                    +"&u_tel="+phone
+                                    +"&u_email="+email;
+                            HttpGet httpGet = new HttpGet(url);
+                            ResponseHandler<String> rh = new BasicResponseHandler();
+                            responseData = client.execute(httpGet,rh);
 
-                Toast.makeText(getApplicationContext(), name +", " + id + ", "+ pwd +", "+date+", "+gender+", "+phone+", "+email ,Toast.LENGTH_LONG).show();
-                finish();
+                            JSONArray jsonArray = new JSONArray(responseData);
+                            String[] datas = new String[jsonArray.length()];
+                            for (int i = 0; i < datas.length; i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                res = jsonObject.getString("status");
+                            }
+                            Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
+                            finish();
+                            Looper.loop();
+
+                        }catch (Exception e){
+
+                        }
+                    }
+                });
+                t.setDaemon(true);
+                t.start();
+
+
+
+                //Toast.makeText(getApplicationContext(), name +", " + id + ", "+ pwd +", "+date+", "+gender+", "+phone+", "+email ,Toast.LENGTH_LONG).show();
 
             }
         });
