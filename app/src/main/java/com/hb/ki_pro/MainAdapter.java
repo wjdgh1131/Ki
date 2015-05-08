@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,21 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MainAdapter extends BaseAdapter{
-
+    String responseData;
     int layout;
+    String k_idx,k_max;
+    String status;
     Context context;
     ArrayList<MainItem> mainList;
     private LayoutInflater inflater;
@@ -66,7 +77,6 @@ public class MainAdapter extends BaseAdapter{
                 .load(item.getU_image())
                 .resize(60,60)
                 .into(u_image);
-
         u_name.setText(item.getU_name());
         k_regdate.setText(item.getK_regdate());
         k_content.setText(item.getK_content());
@@ -80,7 +90,8 @@ public class MainAdapter extends BaseAdapter{
         k_cmt_count.setText(item.getK_cmt_count());
         k_remain.setText(item.getK_remain());
 
-        final String k_idx = item.getK_idx();
+        k_idx = item.getK_idx();
+
 
         convertView.findViewById(R.id.k_cmt_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +105,41 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, k_idx+"번 게시글 기 다운로드 ("+item.getK_remain()+")", Toast.LENGTH_SHORT).show();
+
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HttpClient client = new DefaultHttpClient();
+                            String url = "http://203.236.209.42:8090/sns_project/Mobile?type=ki_up&u_idx="+my_idx+"&k_idx="+k_idx;
+                            HttpGet httpGet = new HttpGet(url);
+                            ResponseHandler<String> rh = new BasicResponseHandler();
+                            responseData = client.execute(httpGet,rh);
+                            Log.i(">>>>>>>>>><<<<<<<<", "ㅈㅈㅈㅈㅈㅈㅈ");
+                            Log.i("--------11111111111",responseData);
+                            Log.i("--------11111111111",my_idx);
+                            Log.i("--------11111111111",k_idx);
+
+
+                            JSONArray jsonArray = new JSONArray(responseData);
+
+                            String[] datas = new String[jsonArray.length()];
+                            for (int i = 0; i < datas.length; i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                               status= jsonObject.getString("status");
+                            }
+                            Toast.makeText(context,status, Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                        }
+
+                    }
+                });
+
+
+
+                t.setDaemon(true);
+                t.start();
+
             }
         });
         convertView.findViewById(R.id.k_cmt_count).setOnClickListener(new View.OnClickListener() {

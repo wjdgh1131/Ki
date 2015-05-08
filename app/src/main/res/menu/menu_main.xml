@@ -19,9 +19,6 @@
         android:icon="@drawable/ic_action_edit"
         wish:showAsAction="ifRoom"
         android:title="@string/write" />
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        wish:showAsAction="never" />
 
     <item
         android:id="@+id/my_ki"
@@ -31,7 +28,19 @@
         android:title="친구 글"/>
     <item
         android:id="@+id/info"
-        android:title="내 정보"/>
+        android:title="내 정보">
+        <menu>
+            <item
+                android:id="@+id/info_update"
+                android:title="정보 수정" />
+            <item
+                android:id="@+id/info_password"
+                android:title="비밀번호 변경" />
+            <item
+                android:id="@+id/info_image"
+                android:title="프로필 이미지 변경" />
+        </menu>
+    </item>
     <item
         android:id="@+id/friend_list"
         android:title="친구 목록"/>
