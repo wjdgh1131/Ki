@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MainAdapter extends BaseAdapter{
@@ -26,11 +22,6 @@ public class MainAdapter extends BaseAdapter{
     Context context;
     ArrayList<MainItem> mainList;
     private LayoutInflater inflater;
-    Bitmap u_image_bm;
-    URL imgUrl;
-    HttpURLConnection connection;
-    InputStream is ;
-    Bitmap getBitmap;
     String my_idx;
 
     public MainAdapter(int layout, Context context, ArrayList<MainItem> mainList, String my_idx) {
@@ -109,7 +100,11 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_cmt_count).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, k_idx + "번 게시글 댓글 보기", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, CmtListActivity.class);
+                intent.putExtra("k_idx", k_idx);
+                intent.putExtra("u_idx", my_idx);
+                context.startActivity(intent);
+//                Toast.makeText(context, k_idx + "번 게시글 댓글 보기", Toast.LENGTH_SHORT).show();
             }
         });
 

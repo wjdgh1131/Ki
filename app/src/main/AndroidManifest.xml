@@ -23,5 +23,6 @@
         <activity android:name=".WishWrite"/>
         <activity android:name=".SelectCard"/>
         <activity android:name=".SignUpActivity"/>
+        <activity android:name=".CmtListActivity"/>
     </application>
 </manifest>

@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
 
     EditText loginId, loginPwd;
     TextView tv;
-    Connect connect;
+
     String id = "";
     String idx = "";
     String type="";
@@ -92,14 +92,6 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-            }
-        });
-
-        findViewById(R.id.friendList).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Ki_Write.class);
-                startActivity(intent);
             }
         });
 
