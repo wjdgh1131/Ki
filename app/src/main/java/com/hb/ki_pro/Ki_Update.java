@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -68,7 +67,6 @@ public class Ki_Update extends ActionBarActivity {
         k_kind.setText(intent.getStringExtra("k_kind"));
         k_con.setText(intent.getStringExtra("k_content"));
 
-        Toast.makeText(getApplicationContext(),intent.getStringExtra("k_idx"),Toast.LENGTH_SHORT).show();
 
         k_image_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +130,6 @@ public class Ki_Update extends ActionBarActivity {
 
                 String realPath = Util.getRealPathFromImageURI(this, imageUri);
                 fileName = realPath;
-                Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_SHORT).show();
 
                 Log.i("fileName =>>>>>>>>>>>", fileName);
                 break;
@@ -143,6 +140,7 @@ public class Ki_Update extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -217,6 +215,8 @@ public class Ki_Update extends ActionBarActivity {
                     Log.i("status =>",status);
                     Intent intent = new Intent(getApplicationContext(), ListActivity.class);
                     intent.putExtra("u_idx",intent.getStringExtra("u_idx"));
+                    intent.putExtra("u_name",intent.getStringExtra("u_name"));
+                    intent.putExtra("u_id",intent.getStringExtra("u_id"));
                     startActivity(intent);
                 }catch (Exception e){
                     Log.i("status false ->","");
@@ -306,6 +306,8 @@ public class Ki_Update extends ActionBarActivity {
             Intent intent = new Intent(getApplicationContext(), ListActivity.class);
             Intent intent1 = getIntent();
             intent.putExtra("u_idx",intent1.getStringExtra("u_idx"));
+            intent.putExtra("u_name",intent.getStringExtra("u_name"));
+            intent.putExtra("u_id",intent.getStringExtra("u_id"));
             startActivity(intent);
 
         }catch (Exception e){

@@ -24,7 +24,7 @@ public class WishWrite extends ActionBarActivity {
     EditText txtWish, txtWishSize;
     Button btnWish;
     String responseData;
-    String u_idx;
+    String u_idx,u_id,u_name;
 //    String regdate;
 
     @Override
@@ -39,6 +39,8 @@ public class WishWrite extends ActionBarActivity {
         final Intent intent = getIntent();
         Log.i(">>>>>>>>>>>>>>>>>>>", "11111111111");
         u_idx = intent.getStringExtra("u_idx");
+        u_id = intent.getStringExtra("u_id");
+        u_name = intent.getStringExtra("u_name");
         Log.i(">>>>>>>>>>>>>>>>>>>", "u_idx" + u_idx);
 
         Thread thread = new Thread(new Runnable() {

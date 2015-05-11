@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -103,7 +102,7 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, item.getK_idx()+"번 게시글 기 다운로드 ("+item.getK_remain()+")", Toast.LENGTH_SHORT).show();
+                ki_up(item.getK_idx());
             }
         });
         if(!item.getK_cmt_count().equals("댓글 0개")) {
@@ -114,7 +113,7 @@ public class MainAdapter extends BaseAdapter{
                     intent.putExtra("k_idx", item.getK_idx());
                     intent.putExtra("u_idx", my_idx);
                     context.startActivity(intent);
-                    Toast.makeText(context, item.getK_idx() + "번 게시글(" + item.getU_name() + ")댓글 보기", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -191,7 +190,37 @@ public class MainAdapter extends BaseAdapter{
         });
         t.setDaemon(true);
         t.start();
+    }
 
+    public void ki_up(final String k_idx){
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=ki_up&u_idx="+my_idx+"&k_idx="+k_idx;
+                    HttpGet httpGet = new HttpGet(url);
+                    ResponseHandler<String> rh = new BasicResponseHandler();
+                    responseData = client.execute(httpGet,rh);
+
+                    JSONArray jsonArray = new JSONArray(responseData);
+
+                    String[] datas = new String[jsonArray.length()];
+                    for (int i = 0; i < datas.length; i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        status= jsonObject.getString("status");
+                    }
+//                    Toast.makeText(context,"기받음", Toast.LENGTH_SHORT).show();
+//                    Log.i(">>>>>>>222222",status);
+                }catch (Exception e){
+                }
+//                Toast.makeText(context,"기받음", Toast.LENGTH_SHORT).show();
+//                Log.i(">>>>>>>",status);
+            }
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
 }

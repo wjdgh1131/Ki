@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -162,7 +161,6 @@ public class Ki_Write extends ActionBarActivity {
 
                 String realPath = Util.getRealPathFromImageURI(this, imageUri);
                 fileName = realPath;
-                Toast.makeText(getApplicationContext(),fileName,Toast.LENGTH_SHORT).show();
 
                 Log.i("fileName =>>>>>>>>>>>",fileName);
                 break;
@@ -238,12 +236,12 @@ public class Ki_Write extends ActionBarActivity {
                 }
                 return true;
             case R.id.action_back:
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                intent.putExtra("u_id",id);
-                intent.putExtra("u_idx",idx);
-                intent.putExtra("u_name",name);
-                startActivity(intent);
-                return true;
+            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+            intent.putExtra("u_id",id);
+            intent.putExtra("u_idx",idx);
+            intent.putExtra("u_name",name);
+            startActivity(intent);
+            return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

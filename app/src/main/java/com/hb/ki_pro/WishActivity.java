@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -196,6 +197,8 @@ public class WishActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WishWrite.class);
                 intent.putExtra("u_idx", u_idx);
+                intent.putExtra("u_idx", u_id);
+                intent.putExtra("u_idx", u_name);
                 startActivityForResult(intent, 1000);
             }
         });
@@ -273,6 +276,8 @@ public class WishActivity extends ActionBarActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(getApplicationContext(), WishWrite.class);
                             intent.putExtra("u_idx", u_idx);
+                            intent.putExtra("u_idx", u_id);
+                            intent.putExtra("u_idx", u_name);
                             startActivityIfNeeded(intent, 1000);
                         }
                     })
@@ -289,6 +294,8 @@ public class WishActivity extends ActionBarActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(getApplicationContext(), WishWrite.class);
                             intent.putExtra("u_idx", u_idx);
+                            intent.putExtra("u_idx", u_id);
+                            intent.putExtra("u_idx", u_name);
                             startActivityIfNeeded(intent, 1000);
                         }
                     })
@@ -374,66 +381,28 @@ public class WishActivity extends ActionBarActivity {
             });
         }
     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wish, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_back, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.action_search:
-                return true;
-            case R.id.action_settings:
-                return true;
-            case R.id.action_write:
-                Intent intent = new Intent(getApplicationContext(), Ki_Write.class);
-                intent.putExtra("u_id", u_id);
-                intent.putExtra("u_idx", u_idx);
-                intent.putExtra("u_name", u_name);
+            case R.id.action_back:
+                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                intent.putExtra("u_id",u_id);
+                intent.putExtra("u_idx",u_idx);
+                intent.putExtra("u_name",u_name);
                 startActivity(intent);
                 return true;
-
-            case R.id.my_ki:
-                Intent intent2 = new Intent(getApplicationContext(), MyKiActivity.class);
-                intent2.putExtra("u_id", u_id);
-                intent2.putExtra("u_idx", u_idx);
-                intent2.putExtra("u_name", u_name);
-                startActivity(intent2);
-                break;
-//            case R.id.friend_ki : Toast.makeText(this,"친구 글",Toast.LENGTH_SHORT).show();break;
-            case R.id.info:
-                Toast.makeText(this, "회원 정보", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.friend_list:
-                Intent intent1 = new Intent(getApplicationContext(), FriendListActivity.class);
-                intent1.putExtra("u_idx", u_idx);
-                startActivity(intent1);
-                break;
-            case R.id.wish:
-                Intent intent3 = new Intent(getApplicationContext(), WishActivity.class);
-                intent3.putExtra("u_idx", u_idx);
-                intent3.putExtra("u_id", u_id);
-                intent3.putExtra("u_name", u_name);
-                intent3.putExtra("u_image", u_image);
-                startActivity(intent3);
-                break;
-
-            case R.id.collection:
-                Toast.makeText(this, "부적 보기", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.logout:
-                finish();
-                break;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-        return false;
     }
+
 }

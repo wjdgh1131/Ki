@@ -69,7 +69,7 @@ public class MyKiActivity extends ActionBarActivity{
 //                        Toast.makeText(getApplicationContext(), jsonObject.getString("u_name"), Toast.LENGTH_SHORT).show();
 //                        String k_content = jsonObject.getString("k_content").replace("<br>", "\n");
                         if(jsonObject.getString("u_idx").equals(msg))
-                        mainList.add(new MainItem(jsonObject.getString("k_idx"), jsonObject.getString("u_idx"), jsonObject.getString("u_image"), jsonObject.getString("u_name"), jsonObject.getString("k_regdate").substring(0, 10), jsonObject.getString("k_content").replace("<br>", "\n"), 30, jsonObject.getString("k_image"), jsonObject.getString("k_kind"),jsonObject.getInt("k_max"), jsonObject.getInt("k_hit")));                    }
+                        mainList.add(new MainItem(jsonObject.getString("k_idx"), jsonObject.getString("u_idx"), jsonObject.getString("u_image"), jsonObject.getString("u_name"), jsonObject.getString("k_regdate").substring(0, 10), jsonObject.getString("k_content").replace("<br>", "\n"), jsonObject.getInt("k_cmt_count") , jsonObject.getString("k_image"), jsonObject.getString("k_kind"),jsonObject.getInt("k_max"), jsonObject.getInt("k_hit")));                    }
                     Log.i("들어옵니까??\n\n\n","ㅇㅇ");
                     Looper.loop();
                 }catch (Exception e){
@@ -154,7 +154,7 @@ public class MyKiActivity extends ActionBarActivity{
                 startActivity(intent2);
                 break;
 //            case R.id.friend_ki : Toast.makeText(this,"친구 글",Toast.LENGTH_SHORT).show();break;
-            case R.id.info : Toast.makeText(this,"회원 정보",Toast.LENGTH_SHORT).show();break;
+            case R.id.info : break;
             case R.id.friend_list :
                 Intent intent1 = new Intent(getApplicationContext(), FriendListActivity.class);
                 intent1.putExtra("u_idx", u_idx);

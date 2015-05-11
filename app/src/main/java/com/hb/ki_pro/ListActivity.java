@@ -152,7 +152,7 @@ public class ListActivity extends ActionBarActivity{
                 intent2.putExtra("u_name",u_name);
                 startActivity(intent2);
                 break;
-            case R.id.info : Toast.makeText(this,"회원 정보",Toast.LENGTH_SHORT).show();break;
+            case R.id.info :break;
             case R.id.friend_list :
                 Intent intent1 = new Intent(getApplicationContext(), FriendListActivity.class);
                 intent1.putExtra("u_idx", u_idx);
