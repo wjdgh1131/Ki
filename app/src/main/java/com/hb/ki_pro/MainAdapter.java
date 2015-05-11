@@ -26,14 +26,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainAdapter extends BaseAdapter{
-    String responseData;
+
     int layout;
-    String k_idx,k_max;
-    String status;
     Context context;
     ArrayList<MainItem> mainList;
     private LayoutInflater inflater;
     String my_idx;
+    String k_idx;
+    String responseData,status;
 
     public MainAdapter(int layout, Context context, ArrayList<MainItem> mainList, String my_idx) {
         this.layout = layout;
@@ -77,6 +77,7 @@ public class MainAdapter extends BaseAdapter{
                 .load(item.getU_image())
                 .resize(60,60)
                 .into(u_image);
+
         u_name.setText(item.getU_name());
         k_regdate.setText(item.getK_regdate());
         k_content.setText(item.getK_content());
@@ -92,7 +93,6 @@ public class MainAdapter extends BaseAdapter{
 
         k_idx = item.getK_idx();
 
-
         convertView.findViewById(R.id.k_cmt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,41 +105,7 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpClient client = new DefaultHttpClient();
-                            String url = "http://203.236.209.42:8090/sns_project/Mobile?type=ki_up&u_idx="+my_idx+"&k_idx="+k_idx;
-                            HttpGet httpGet = new HttpGet(url);
-                            ResponseHandler<String> rh = new BasicResponseHandler();
-                            responseData = client.execute(httpGet,rh);
-                            Log.i(">>>>>>>>>><<<<<<<<", "ㅈㅈㅈㅈㅈㅈㅈ");
-                            Log.i("--------11111111111",responseData);
-                            Log.i("--------11111111111",my_idx);
-                            Log.i("--------11111111111",k_idx);
-
-
-                            JSONArray jsonArray = new JSONArray(responseData);
-
-                            String[] datas = new String[jsonArray.length()];
-                            for (int i = 0; i < datas.length; i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                               status= jsonObject.getString("status");
-                            }
-                            Toast.makeText(context,status, Toast.LENGTH_SHORT).show();
-                        }catch (Exception e){
-                        }
-
-                    }
-                });
-
-
-
-                t.setDaemon(true);
-                t.start();
-
+                Toast.makeText(context, k_idx+"번 게시글 기 다운로드 ("+item.getK_remain()+")", Toast.LENGTH_SHORT).show();
             }
         });
         convertView.findViewById(R.id.k_cmt_count).setOnClickListener(new View.OnClickListener() {
@@ -170,7 +136,21 @@ public class MainAdapter extends BaseAdapter{
                                     intent.putExtra("k_image",item.getK_image());
                                     context.startActivity(intent);
                                 }else if( msg[which].equals("삭제")){
-
+                                    AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                                    dlg.setTitle("글을 삭제하시겠습니까??");
+                                    dlg.setIcon(R.mipmap.ic_launcher);
+                                    dlg.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    });
+                                    dlg.setPositiveButton("삭제",new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            delete();
+                                        }
+                                    });
+                                    dlg.show();
                                 }
                             }
                         })
@@ -179,6 +159,39 @@ public class MainAdapter extends BaseAdapter{
             }
         });
         return convertView;
+    }
+
+    public void delete(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=k_delete&k_idx="+k_idx;
+                    HttpGet httpGet = new HttpGet(url);
+                    ResponseHandler<String> rh = new BasicResponseHandler();
+
+                    responseData = client.execute(httpGet,rh);
+                    JSONArray jsonArray = new JSONArray(responseData);
+
+                    String[] datas = new String[jsonArray.length()];
+                    for (int i = 0; i < datas.length; i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        status = jsonObject.getString("status");
+                    }
+
+                    Log.i("status =>", status);
+                    Intent intent = new Intent(context, ListActivity.class);
+                    intent.putExtra("u_idx",intent.getStringExtra("u_idx"));
+                    context.startActivity(intent);
+                }catch (Exception e){
+                    Log.i("status false ->", "");
+                }
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+
     }
 
 }

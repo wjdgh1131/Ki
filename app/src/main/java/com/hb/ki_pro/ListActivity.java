@@ -41,7 +41,6 @@ public class ListActivity extends ActionBarActivity{
         u_id = intent.getStringExtra("u_id");
         u_idx = intent.getStringExtra("u_idx");
         u_name = intent.getStringExtra("u_name");
-        Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
 
 
 
