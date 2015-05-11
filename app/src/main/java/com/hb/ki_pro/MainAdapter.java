@@ -32,7 +32,6 @@ public class MainAdapter extends BaseAdapter{
     ArrayList<MainItem> mainList;
     private LayoutInflater inflater;
     String my_idx;
-    String k_idx;
     String responseData,status;
 
     public MainAdapter(int layout, Context context, ArrayList<MainItem> mainList, String my_idx) {
@@ -91,13 +90,12 @@ public class MainAdapter extends BaseAdapter{
         k_cmt_count.setText(item.getK_cmt_count());
         k_remain.setText(item.getK_remain());
 
-        k_idx = item.getK_idx();
 
         convertView.findViewById(R.id.k_cmt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CmtAddActivity.class);
-                intent.putExtra("k_idx", k_idx);
+                intent.putExtra("k_idx", item.getK_idx());
                 intent.putExtra("u_idx", my_idx);
                 context.startActivity(intent);
             }
@@ -105,14 +103,14 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, k_idx+"번 게시글 기 다운로드 ("+item.getK_remain()+")", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, item.getK_idx()+"번 게시글 기 다운로드 ("+item.getK_remain()+")", Toast.LENGTH_SHORT).show();
             }
         });
         convertView.findViewById(R.id.k_cmt_count).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CmtListActivity.class);
-                intent.putExtra("k_idx", k_idx);
+                intent.putExtra("k_idx", item.getK_idx());
                 intent.putExtra("u_idx", my_idx);
                 context.startActivity(intent);
 //                Toast.makeText(context, k_idx + "번 게시글 댓글 보기", Toast.LENGTH_SHORT).show();
@@ -130,7 +128,7 @@ public class MainAdapter extends BaseAdapter{
                                 if( msg[which].equals("수정")){
                                     Intent intent = new Intent(context,Ki_Update.class);
                                     intent.putExtra("u_idx",my_idx);
-                                    intent.putExtra("k_idx",k_idx);
+                                    intent.putExtra("k_idx",item.getK_idx());
                                     intent.putExtra("k_kind",item.getK_kind());
                                     intent.putExtra("k_content",item.getK_content());
                                     intent.putExtra("k_image",item.getK_image());
@@ -147,7 +145,7 @@ public class MainAdapter extends BaseAdapter{
                                     dlg.setPositiveButton("삭제",new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            delete();
+                                            delete(item.getK_idx());
                                         }
                                     });
                                     dlg.show();
@@ -161,13 +159,13 @@ public class MainAdapter extends BaseAdapter{
         return convertView;
     }
 
-    public void delete(){
+    public void delete(final String k){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     HttpClient client = new DefaultHttpClient();
-                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=k_delete&k_idx="+k_idx;
+                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=k_delete&k_idx="+k;
                     HttpGet httpGet = new HttpGet(url);
                     ResponseHandler<String> rh = new BasicResponseHandler();
 
