@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class SearchAdapter extends BaseAdapter{
     Context context;
     ArrayList<FriendItem> friendList;
     private LayoutInflater inflater;
+    Button friend_add;
 
     public SearchAdapter(int layout, Context context, ArrayList<FriendItem> friendList) {
         this.layout = layout;
@@ -50,7 +52,8 @@ public class SearchAdapter extends BaseAdapter{
         final FriendItem item = friendList.get(position);
         ImageView friend_image = (ImageView)convertView.findViewById(R.id.friend_image);
         TextView friend_name = (TextView)convertView.findViewById(R.id.friend_name);
-
+        friend_add = (Button)convertView.findViewById(R.id.friend_del);
+        friend_add.setText("친구추가");
 
         friend_name.setText(item.getU_name());
         Picasso.with(context)
@@ -58,9 +61,10 @@ public class SearchAdapter extends BaseAdapter{
                 .resize(60,60)
                 .into(friend_image);
 
-        convertView.findViewById(R.id.friend_del).setOnClickListener(new View.OnClickListener() {
+        friend_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Toast.makeText(context, item.getF_idx()+"번을 친구추가합니다", Toast.LENGTH_SHORT).show();
             }
         });

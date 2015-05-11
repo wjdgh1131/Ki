@@ -66,7 +66,6 @@ public class SearchActivity extends ActionBarActivity{
         t.start();
 
         searchListView = (ListView)findViewById(R.id.searchListView);
-
         SearchAdapter adapter = new SearchAdapter(R.layout.friend_item, this, searchList);
         searchListView.setAdapter(adapter);
 
