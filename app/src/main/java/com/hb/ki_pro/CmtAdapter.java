@@ -67,7 +67,7 @@ public class CmtAdapter extends BaseAdapter{
         TextView cmt_date = (TextView)convertView.findViewById(R.id.cmt_date);
 
 
-        CmtItem item = cmtList.get(position);
+        final CmtItem item = cmtList.get(position);
 
         r_idx =  item.getR_idx();
 
@@ -85,8 +85,35 @@ public class CmtAdapter extends BaseAdapter{
             convertView.findViewById(R.id.cmt_del).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Toast.makeText(context, r_idx + "번 댓글 삭제", Toast.LENGTH_SHORT).show();
-                    cmt_del_ok();
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+
+                                Looper.prepare();
+                                HttpClient client = new DefaultHttpClient();
+                                String url = "http://203.236.209.42:8090/sns_project/Mobile?type=cmt_del&r_idx="+item.getR_idx();
+
+                                HttpGet httpGet = new HttpGet(url);
+                                ResponseHandler<String> rh = new BasicResponseHandler();
+                                responseData = client.execute(httpGet,rh);
+
+                                JSONArray jsonArray = new JSONArray(responseData);
+                                String[] datas = new String[jsonArray.length()];
+                                for (int i = 0; i < datas.length; i++) {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    res = jsonObject.getString("status");
+                                }
+                                Toast.makeText(context, res, Toast.LENGTH_SHORT).show();
+
+                                Looper.loop();
+                            }catch (Exception e){
+
+                            }
+                        }
+                    });
+                    t.setDaemon(true);
+                    t.start();
                 }
             });
         }else{
@@ -97,35 +124,5 @@ public class CmtAdapter extends BaseAdapter{
         return convertView;
     }
 
-    protected void cmt_del_ok(){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
 
-                    Looper.prepare();
-                    HttpClient client = new DefaultHttpClient();
-                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=cmt_del&r_idx="+r_idx;
-
-                    HttpGet httpGet = new HttpGet(url);
-                    ResponseHandler<String> rh = new BasicResponseHandler();
-                    responseData = client.execute(httpGet,rh);
-
-                    JSONArray jsonArray = new JSONArray(responseData);
-                    String[] datas = new String[jsonArray.length()];
-                    for (int i = 0; i < datas.length; i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        res = jsonObject.getString("status");
-                        }
-                    Toast.makeText(context, res, Toast.LENGTH_SHORT).show();
-
-                    Looper.loop();
-                }catch (Exception e){
-
-                }
-            }
-        });
-        t.setDaemon(true);
-        t.start();
-    }
 }
