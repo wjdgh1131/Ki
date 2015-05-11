@@ -108,17 +108,19 @@ public class MainAdapter extends BaseAdapter{
                 Toast.makeText(context, k_idx+"번 게시글 기 다운로드 ("+item.getK_remain()+")", Toast.LENGTH_SHORT).show();
             }
         });
-        convertView.findViewById(R.id.k_cmt_count).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, CmtListActivity.class);
-                intent.putExtra("k_idx", k_idx);
-                intent.putExtra("u_idx", my_idx);
-                context.startActivity(intent);
-//                Toast.makeText(context, k_idx + "번 게시글 댓글 보기", Toast.LENGTH_SHORT).show();
-            }
-        });
 
+        if(!item.getK_cmt_count().equals("댓글 0개")) {
+            convertView.findViewById(R.id.k_cmt_count).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CmtListActivity.class);
+                    intent.putExtra("k_idx", k_idx);
+                    intent.putExtra("u_idx", my_idx);
+                    context.startActivity(intent);
+                    Toast.makeText(context, k_idx + "번 게시글(" + item.getU_name() + ")댓글 보기", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         convertView.findViewById(R.id.overflow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

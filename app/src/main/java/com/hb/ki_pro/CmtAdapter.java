@@ -1,6 +1,7 @@
 package com.hb.ki_pro;
 
 import android.content.Context;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,14 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class CmtAdapter extends BaseAdapter{
@@ -20,6 +29,8 @@ public class CmtAdapter extends BaseAdapter{
     Context context;
     private LayoutInflater inflater;
     String my_idx;
+    String responseData;
+    String r_idx, res;
 
     public CmtAdapter(ArrayList<CmtItem> cmtList, int layout, Context context, String my_idx) {
         this.cmtList = cmtList;
@@ -58,7 +69,7 @@ public class CmtAdapter extends BaseAdapter{
 
         CmtItem item = cmtList.get(position);
 
-        final String r_idx =  item.getR_idx();
+        r_idx =  item.getR_idx();
 
         Picasso.with(context)
                 .load(item.getU_image())
@@ -74,7 +85,8 @@ public class CmtAdapter extends BaseAdapter{
             convertView.findViewById(R.id.cmt_del).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, r_idx + "번 댓글 삭제", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, r_idx + "번 댓글 삭제", Toast.LENGTH_SHORT).show();
+                    cmt_del_ok();
                 }
             });
         }else{
@@ -83,5 +95,37 @@ public class CmtAdapter extends BaseAdapter{
 
 
         return convertView;
+    }
+
+    protected void cmt_del_ok(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    Looper.prepare();
+                    HttpClient client = new DefaultHttpClient();
+                    String url = "http://203.236.209.42:8090/sns_project/Mobile?type=cmt_del&r_idx="+r_idx;
+
+                    HttpGet httpGet = new HttpGet(url);
+                    ResponseHandler<String> rh = new BasicResponseHandler();
+                    responseData = client.execute(httpGet,rh);
+
+                    JSONArray jsonArray = new JSONArray(responseData);
+                    String[] datas = new String[jsonArray.length()];
+                    for (int i = 0; i < datas.length; i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        res = jsonObject.getString("status");
+                        }
+                    Toast.makeText(context, res, Toast.LENGTH_SHORT).show();
+
+                    Looper.loop();
+                }catch (Exception e){
+
+                }
+            }
+        });
+        t.setDaemon(true);
+        t.start();
     }
 }
