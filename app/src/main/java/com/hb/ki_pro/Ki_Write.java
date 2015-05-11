@@ -241,6 +241,7 @@ public class Ki_Write extends ActionBarActivity {
             intent.putExtra("u_idx",idx);
             intent.putExtra("u_name",name);
             startActivity(intent);
+            finish();
             return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -327,7 +328,7 @@ public class Ki_Write extends ActionBarActivity {
             intent.putExtra("u_idx",idx);
             intent.putExtra("u_name",name);
             startActivity(intent);
-
+            finish();
         }catch (Exception e){
             Log.d("Test","exception "+ e.getMessage());
         }

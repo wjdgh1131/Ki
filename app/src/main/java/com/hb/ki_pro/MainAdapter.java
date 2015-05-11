@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -102,6 +103,7 @@ public class MainAdapter extends BaseAdapter{
         convertView.findViewById(R.id.k_download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context,"기받기 성공!! 소원페이지에서 확인하세욤><",Toast.LENGTH_SHORT).show();
                 ki_up(item.getK_idx());
             }
         });
@@ -180,6 +182,7 @@ public class MainAdapter extends BaseAdapter{
                     }
 
                     Log.i("status =>", status);
+
                     Intent intent = new Intent(context, ListActivity.class);
                     intent.putExtra("u_idx",intent.getStringExtra("u_idx"));
                     context.startActivity(intent);

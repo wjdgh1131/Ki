@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="아이디"
-        android:text="suzi"
+
         android:background="@drawable/myedittxt"
         android:padding="10dp"
         android:layout_marginLeft="50dp"
@@ -34,7 +34,7 @@
         android:layout_marginRight="50dp"
         android:radius="10dp"
         android:id="@+id/loginPwd"
-        android:text="1111"
+
         />
     <Button
         android:layout_width="match_parent"
