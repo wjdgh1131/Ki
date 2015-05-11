@@ -27,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     String id = "";
     String idx = "";
     String name= "";
+    String image="";
     String type="";
     String send="";
     String responseData;
@@ -75,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
                                 id = jsonObject.getString("u_id");
                                 idx = jsonObject.getString("u_idx");
                                 name = jsonObject.getString("u_name");
+                                image = jsonObject.getString("u_image");
                             }
                         }catch (Exception e){
                         }
@@ -82,6 +84,7 @@ public class MainActivity extends ActionBarActivity {
                         intent.putExtra("u_id",id);
                         intent.putExtra("u_idx",idx);
                         intent.putExtra("u_name",name);
+                        intent.putExtra("u_image",image);
 
                         Log.i("-->>>>>>>>>>>>>>ID",id);
                         Log.i("-->>>>>>>>>>>>>>ID",idx);

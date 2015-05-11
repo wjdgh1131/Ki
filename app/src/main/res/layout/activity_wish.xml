@@ -19,27 +19,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="#ffffff">
-
+<!--
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
+                android:id="@+id/wish_image"
                 android:src="@drawable/donald"
                 android:layout_weight="0.2"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"/>
-
+-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.8"
-                android:layout_marginRight="10dp">
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="아이디"
+                    android:textSize="20dp"
                     android:id="@+id/textView"
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"/>
@@ -48,6 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="현재 소원 보여지는 부분"
+                    android:textSize="20dp"
                     android:id="@+id/textView2"
                     android:layout_weight="1"
                     android:layout_marginTop="10dp"

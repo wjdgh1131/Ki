@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".ListActivity" />
         <activity android:name=".FriendListActivity" />
+        <activity android:name=".MyKiActivity" />
         <activity android:name=".CmtAddActivity" />
         <activity android:name=".WishActivity" />
         <activity android:name=".WishWrite" />

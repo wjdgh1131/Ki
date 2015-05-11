@@ -30,6 +30,7 @@ public class MyKiActivity extends ActionBarActivity{
     String query;
     Connect connect;
     String msg=null;
+    String u_id,u_idx,u_name,u_image;
     RbPreference rb = new RbPreference(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,10 @@ public class MyKiActivity extends ActionBarActivity{
         msg = intent.getStringExtra("u_idx");
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
 
-
+        u_id = intent.getStringExtra("u_id");
+        u_idx = intent.getStringExtra("u_idx");
+        u_name = intent.getStringExtra("u_name");
+        u_image = intent.getStringExtra("u_image");
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -136,22 +140,36 @@ public class MyKiActivity extends ActionBarActivity{
                 return true;
             case R.id.action_write:
                 Intent intent = new Intent(getApplicationContext(), Ki_Write.class);
+                intent.putExtra("u_id",u_id);
+                intent.putExtra("u_idx",u_idx);
+                intent.putExtra("u_name",u_name);
                 startActivity(intent);
                 return true;
 
             case R.id.my_ki :
-//                Intent intent1 = new Intent(getApplicationContext());
-//                intent1.putExtra("u_idx",msg);
-//                startActivity(intent1);
+                Intent intent2 = new Intent(getApplicationContext(), MyKiActivity.class);
+                intent2.putExtra("u_id",u_id);
+                intent2.putExtra("u_idx",u_idx);
+                intent2.putExtra("u_name",u_name);
+                startActivity(intent2);
+                break;
+//            case R.id.friend_ki : Toast.makeText(this,"친구 글",Toast.LENGTH_SHORT).show();break;
+            case R.id.info : Toast.makeText(this,"회원 정보",Toast.LENGTH_SHORT).show();break;
+            case R.id.friend_list :
+                Intent intent1 = new Intent(getApplicationContext(), FriendListActivity.class);
+                intent1.putExtra("u_idx", u_idx);
+                startActivity(intent1);
+                break;
+            case R.id.wish : Intent intent3 = new Intent(getApplicationContext(), WishActivity.class);
+                intent3.putExtra("u_idx", u_idx);
+                intent3.putExtra("u_id", u_id);
+                intent3.putExtra("u_name", u_name);
+                intent3.putExtra("u_image", u_image);
+                startActivity(intent3);
                 break;
 
-            case R.id.friend_ki : Toast.makeText(this,"친구 글",Toast.LENGTH_SHORT).show();break;
-            case R.id.info : Toast.makeText(this,"회원 정보",Toast.LENGTH_SHORT).show();break;
-            case R.id.friend_list : Toast.makeText(this,"친구 목록",Toast.LENGTH_SHORT).show();break;
-            case R.id.wish : Toast.makeText(this,"소원 빌기",Toast.LENGTH_SHORT).show();break;
             case R.id.collection : Toast.makeText(this,"부적 보기",Toast.LENGTH_SHORT).show();break;
             case R.id.logout : finish(); break;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
