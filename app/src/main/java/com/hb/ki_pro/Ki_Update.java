@@ -68,6 +68,8 @@ public class Ki_Update extends ActionBarActivity {
         k_kind.setText(intent.getStringExtra("k_kind"));
         k_con.setText(intent.getStringExtra("k_content"));
 
+        Toast.makeText(getApplicationContext(),intent.getStringExtra("k_idx"),Toast.LENGTH_SHORT).show();
+
         k_image_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
